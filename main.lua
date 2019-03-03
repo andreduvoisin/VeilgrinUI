@@ -36,6 +36,7 @@ local BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON = "MultiBarBottomLeftButton"
 local BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON = "MultiBarBottomRightButton"
 local RIGHT_ACTION_BAR_FIRST_BUTTON = "MultiBarRightButton"
 local LEFT_ACTION_BAR_FIRST_BUTTON = "MultiBarLeftButton"
+local STANCE_BAR_FIRST_BUTTON = "StanceButton"
 
 local function RemoveMacroNamesFromActionBar(name)
     for i=1, 12 do
@@ -123,19 +124,29 @@ local FOURTH_ACTION_BAR_BUTTON_NAMES = {
     LEFT_ACTION_BAR_FIRST_BUTTON..12
 }
 
-local function RearrangeActionBarHorizontal16(names)
+local STANCE_BAR_BUTTON_NAMES = {
+    STANCE_BAR_FIRST_BUTTON..1,
+    STANCE_BAR_FIRST_BUTTON..2,
+    STANCE_BAR_FIRST_BUTTON..3,
+    STANCE_BAR_FIRST_BUTTON..4,
+    STANCE_BAR_FIRST_BUTTON..5,
+    STANCE_BAR_FIRST_BUTTON..6
+}
+
+local function RearrangeActionBarHorizontal(names, horizontalSpacing)
     for i = 2, table.getn(names) do
         local button = _G[names[i]]
         button:ClearAllPoints()
-        button:SetPoint("LEFT", names[i - 1], "RIGHT", 6, 0)
+        button:SetPoint("LEFT", names[i - 1], "RIGHT", horizontalSpacing, 0)
     end
 end
 
-local function RearrangeAllActionBarsHorizontal16()
-    RearrangeActionBarHorizontal16(FIRST_ACTION_BAR_BUTTON_NAMES)
-    RearrangeActionBarHorizontal16(SECOND_ACTION_BAR_BUTTON_NAMES)
-    RearrangeActionBarHorizontal16(THIRD_ACTION_BAR_BUTTON_NAMES)
-    RearrangeActionBarHorizontal16(FOURTH_ACTION_BAR_BUTTON_NAMES)
+local function RearrangeAllActionBarsHorizontal()
+    local horizontalSpacing = 6
+    RearrangeActionBarHorizontal(FIRST_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)
+    RearrangeActionBarHorizontal(SECOND_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)
+    RearrangeActionBarHorizontal(THIRD_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)
+    RearrangeActionBarHorizontal(FOURTH_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)
 end
 
 local function MoveActionBarCenterPoint(name, x, y)
@@ -165,6 +176,25 @@ local function MoveAllActionBars(offsetX, offsetY, verticalSpacing)
         -20 + offsetY + (-verticalSpacing * 3))
 end
 
+local function MoveStanceActionBar(offsetX, offsetY)
+    local button = _G[STANCE_BAR_BUTTON_NAMES[1]]
+    button:ClearAllPoints()
+    button:SetPoint("CENTER", -693 + offsetX, 1061 + offsetY)
+end
+
+local function BottomUnitFrames()
+    CRFSort_Group = function(team1, team2)
+        if UnitIsUnit(team1, "player") then
+            return false
+        elseif UnitIsUnit(team2, "player") then
+            return true
+        else
+            return team1 < team2
+        end
+    end
+    CompactRaidFrameContainer.flowSortFunc=CRFSort_Group
+end
+
 local EventFrame = CreateFrame("Frame")
 EventFrame:RegisterEvent("PLAYER_LOGIN")
 EventFrame:SetScript("OnEvent", function(self, event, ...)
@@ -176,6 +206,26 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     CastingBarFrame:SetPoint("CENTER", 0, -130)
     CastingBarFrame.SetPoint = function() end
     
-    RearrangeAllActionBarsHorizontal16()
+    RearrangeAllActionBarsHorizontal()
     MoveAllActionBars(0, -300, 3)
+
+    PlayerFrame:ClearAllPoints()
+    PlayerFrame:SetPoint("CENTER", -200, 200)
+    PlayerFrame.SetPoint = function() end
+
+    TargetFrame:ClearAllPoints()
+    TargetFrame:SetPoint("CENTER", 200, 200)
+    TargetFrame.SetPoint = function() end
+
+    FocusFrame:ClearAllPoints()
+    FocusFrame:SetPoint("CENTER", 0, 0)
+    FocusFrame.SetPoint = function() end
+
+    MoveStanceActionBar(6, -5)
+
+    RearrangeActionBarHorizontal(STANCE_BAR_BUTTON_NAMES, 4)
+
+    SetCVar("nameplateMinAlpha", 1)
+
+    BottomUnitFrames()
 end)

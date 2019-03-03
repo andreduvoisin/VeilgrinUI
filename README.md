@@ -12,3 +12,12 @@ World of Warcraft AddOn for a default yet minimalist user interface.
 - WoWLua addon for live reloading test-bed in-game
 - BugGrabber and BugSack addons for error detection
 - Screen Overlay: Enhanced addon for an on-screen grid
+
+## TODO
+
+- Tooltips
+- Exit Vehicle
+- Focus Frame
+- Self / Target Frames
+- Arena Frames
+- Boss Frames
