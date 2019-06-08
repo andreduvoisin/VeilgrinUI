@@ -1,6 +1,6 @@
 # VeilgrinUI
 
-World of Warcraft AddOn for a default yet minimalist user interface.
+World of Warcraft AddOn for a default yet minimalistic user interface
 
 ## References
 
@@ -9,9 +9,9 @@ World of Warcraft AddOn for a default yet minimalist user interface.
 - https://wowwiki.fandom.com/wiki/WoW_AddOn
 - https://wowwiki.fandom.com/wiki/Slash_commands
 - http://wowprogramming.com/index.html
-- WoWLua addon for live reloading test-bed in-game
-- BugGrabber and BugSack addons for error detection
-- Screen Overlay: Enhanced addon for an on-screen grid
+- `WoWLua` addon for live reloading test-bed in-game
+- `BugGrabber` and `BugSack` addons for error detection
+- `Screen Overlay: Enhanced` addon for an on-screen grid
 
 ## TODO
 
