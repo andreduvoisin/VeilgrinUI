@@ -1,33 +1,36 @@
 
 local function RemoveBottomActionBarStyling()
-    MainMenuBarArtFrame.LeftEndCap:Hide()
-    MainMenuBarArtFrame.RightEndCap:Hide()
-    MainMenuBarArtFrameBackground:Hide()
+    MainMenuBarLeftEndCap:Hide()
+    MainMenuBarRightEndCap:Hide()
 
-    StatusTrackingBarManager:Hide()
+    MainMenuBarTexture0:Hide()
+    MainMenuBarTexture1:Hide()
+    MainMenuBarTexture2:Hide()
+
+    -- StatusTrackingBarManager:Hide()
 
     ActionBarUpButton:Hide()
     ActionBarDownButton:Hide()
-    MainMenuBarArtFrame.PageNumber:SetAlpha(0)
+    MainMenuBarPageNumber:SetAlpha(0)
 end
 
 local function RemoveMenuMicroButtonAndBagsBar()
-    MicroButtonAndBagsBar:Hide()
+    MainMenuBarTexture3:Hide()
+    MainMenuBarBackpackButton:Hide()
+    CharacterBag0Slot:Hide()
+    CharacterBag1Slot:Hide()
+    CharacterBag2Slot:Hide()
+    CharacterBag3Slot:Hide()
+
+    MainMenuBarPerformanceBarFrame:Hide()
 
     CharacterMicroButton:Hide()
     SpellbookMicroButton:Hide()
-    TalentMicroButton:Hide()
-    AchievementMicroButton:Hide()
     QuestLogMicroButton:Hide()
-    GuildMicroButton:Hide()
-    LFDMicroButton:Hide()
-    CollectionsMicroButton:Hide()
-    EJMicroButton:Hide()
-    StoreMicroButton:Hide()
+    SocialsMicroButton:Hide()
+    WorldMapMicroButton:Hide()
     MainMenuMicroButton:Hide()
-
-    -- required because the game does an extra StoreMicroButton:Show() after login
-    StoreMicroButton:SetScript("OnShow", StoreMicroButton.Hide)
+    HelpMicroButton:Hide()
 end
 
 -- bottom right and bottom left are also anchored to the main action bar
@@ -152,28 +155,26 @@ end
 local function MoveActionBarCenterPoint(name, x, y)
     local button = _G[name]
     button:ClearAllPoints()
-    button:SetPoint("CENTER", x, y)
+    button:SetPoint("CENTER", "WorldFrame", x, y)
 end
 
--- I have no idea why offsetY works the way it does.
--- Something is screwed up with what these are actually anchored to / parented from.
 local function MoveAllActionBars(offsetX, offsetY, verticalSpacing)
     MoveActionBarCenterPoint(
         FIRST_ACTION_BAR_BUTTON_NAMES[1],
         -314 + offsetX,
-        613 + offsetY)
+        63 + offsetY)
     MoveActionBarCenterPoint(
         SECOND_ACTION_BAR_BUTTON_NAMES[1],
-        -232 + offsetX,
-        229 + (offsetY / 2) + (-verticalSpacing))
+        -314 + offsetX,
+        24 + offsetY + (-verticalSpacing))
     MoveActionBarCenterPoint(
         THIRD_ACTION_BAR_BUTTON_NAMES[1],
-        -650 + offsetX,
-        -85 + (-verticalSpacing * 2))
+        -314 + offsetX,
+        -15 + offsetY + (-verticalSpacing * 2))
     MoveActionBarCenterPoint(
         FOURTH_ACTION_BAR_BUTTON_NAMES[1],
-        -1233 + offsetX,
-        -20 + offsetY + (-verticalSpacing * 3))
+        -230 + offsetX,
+        -54 + offsetY + (-verticalSpacing * 3))
 end
 
 local function MoveStanceActionBar(offsetX, offsetY)
@@ -198,16 +199,30 @@ end
 local EventFrame = CreateFrame("Frame")
 EventFrame:RegisterEvent("PLAYER_LOGIN")
 EventFrame:SetScript("OnEvent", function(self, event, ...)
+    -- ChatFrame1:AddMessage('WhyHelloThar '.. UnitName("Player"))
     RemoveBottomActionBarStyling()
     RemoveMenuMicroButtonAndBagsBar()
     RemoveMacroNamesFromAllActionBars()
 
+    -- Without these, the MultiBarLeft and MultiBarRight buttons
+    -- scale according to the position of ActionButton1. No idea why.
+    MultiBarLeft.SetScale = function() end
+    MultiBarRight.SetScale = function() end
+
+    QuestWatchFrame:ClearAllPoints()
+    QuestWatchFrame:SetPoint("TOPRIGHT", "MinimapCluster", "BOTTOMRIGHT", 0, 0)
+    QuestWatchFrame.SetPoint = function() end
+
     CastingBarFrame:ClearAllPoints()
-    CastingBarFrame:SetPoint("CENTER", 0, -130)
+    CastingBarFrame:SetPoint("CENTER", 0, -125)
     CastingBarFrame.SetPoint = function() end
     
     RearrangeAllActionBarsHorizontal()
-    MoveAllActionBars(0, -300, 3)
+    MoveAllActionBars(0, -284, 3)
+
+    MainMenuBar:ClearAllPoints()
+    MainMenuBar:SetPoint("CENTER", 0, -443)
+    MainMenuBar.SetPoint = function() end
 
     PlayerFrame:ClearAllPoints()
     PlayerFrame:SetPoint("CENTER", -200, 200)
@@ -216,10 +231,6 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     TargetFrame:ClearAllPoints()
     TargetFrame:SetPoint("CENTER", 200, 200)
     TargetFrame.SetPoint = function() end
-
-    FocusFrame:ClearAllPoints()
-    FocusFrame:SetPoint("CENTER", 0, 0)
-    FocusFrame.SetPoint = function() end
 
     MoveStanceActionBar(6, -5)
 
