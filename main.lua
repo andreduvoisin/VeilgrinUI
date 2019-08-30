@@ -239,7 +239,7 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     
     SetScaleForAllActionBars(0.8)
     RearrangeAllActionBarsHorizontal()
-    MoveAllActionBars(0, -385, 3)
+    MoveAllActionBars(0, -415, 3)
 
     MainMenuBar:ClearAllPoints()
     MainMenuBar:SetPoint("CENTER", 0, -443)
