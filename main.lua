@@ -26,11 +26,15 @@ local function RemoveMenuMicroButtonAndBagsBar()
 
     CharacterMicroButton:Hide()
     SpellbookMicroButton:Hide()
+    TalentMicroButton:Hide()
     QuestLogMicroButton:Hide()
     SocialsMicroButton:Hide()
     WorldMapMicroButton:Hide()
     MainMenuMicroButton:Hide()
     HelpMicroButton:Hide()
+    
+    -- required because the game does an extra TalentMicroButton:Show() after login
+    TalentMicroButton.Show = function() end
 end
 
 -- bottom right and bottom left are also anchored to the main action bar
@@ -44,6 +48,7 @@ local STANCE_BAR_FIRST_BUTTON = "StanceButton"
 local function RemoveMacroNamesFromActionBar(name)
     for i=1, 12 do
         _G[name..i.."Name"]:SetAlpha(0)
+        _G[name..i]:SetScale(0.8, 0.8)
     end
 end
 
@@ -53,6 +58,20 @@ local function RemoveMacroNamesFromAllActionBars()
     RemoveMacroNamesFromActionBar(BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON)
     RemoveMacroNamesFromActionBar(RIGHT_ACTION_BAR_FIRST_BUTTON)
     RemoveMacroNamesFromActionBar(LEFT_ACTION_BAR_FIRST_BUTTON)
+end
+
+local function SetActionBarScale(name, scale)
+    for i=1, 12 do
+        _G[name..i]:SetScale(scale, scale)
+    end
+end
+
+local function SetScaleForAllActionBars(scale)
+    SetActionBarScale(MAIN_ACTION_BAR_FIRST_BUTTON, scale)
+    SetActionBarScale(BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON, scale)
+    SetActionBarScale(BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON, scale)
+    SetActionBarScale(RIGHT_ACTION_BAR_FIRST_BUTTON, scale)
+    SetActionBarScale(LEFT_ACTION_BAR_FIRST_BUTTON, scale)
 end
 
 local FIRST_ACTION_BAR_BUTTON_NAMES = {
@@ -199,13 +218,14 @@ end
 local EventFrame = CreateFrame("Frame")
 EventFrame:RegisterEvent("PLAYER_LOGIN")
 EventFrame:SetScript("OnEvent", function(self, event, ...)
-    -- ChatFrame1:AddMessage('WhyHelloThar '.. UnitName("Player"))
+    ChatFrame1:AddMessage('(VeilgrinUI) Greetings, '..UnitName("Player")..'!')
+
     RemoveBottomActionBarStyling()
     RemoveMenuMicroButtonAndBagsBar()
     RemoveMacroNamesFromAllActionBars()
 
     -- Without these, the MultiBarLeft and MultiBarRight buttons
-    -- scale according to the position of ActionButton1. No idea why.
+    -- scale according to the position of ActionButton1. I have no idea why.
     MultiBarLeft.SetScale = function() end
     MultiBarRight.SetScale = function() end
 
@@ -214,22 +234,25 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     QuestWatchFrame.SetPoint = function() end
 
     CastingBarFrame:ClearAllPoints()
-    CastingBarFrame:SetPoint("CENTER", 0, -125)
+    CastingBarFrame:SetPoint("CENTER", "WorldFrame", 0, -115)
     CastingBarFrame.SetPoint = function() end
     
+    SetScaleForAllActionBars(0.8)
     RearrangeAllActionBarsHorizontal()
-    MoveAllActionBars(0, -284, 3)
+    MoveAllActionBars(0, -385, 3)
 
     MainMenuBar:ClearAllPoints()
     MainMenuBar:SetPoint("CENTER", 0, -443)
     MainMenuBar.SetPoint = function() end
 
     PlayerFrame:ClearAllPoints()
-    PlayerFrame:SetPoint("CENTER", -200, 200)
+    PlayerFrame:SetPoint("CENTER", "WorldFrame", -114, -180)
+    PlayerFrame:SetScale(0.9, 0.9)
     PlayerFrame.SetPoint = function() end
 
     TargetFrame:ClearAllPoints()
-    TargetFrame:SetPoint("CENTER", 200, 200)
+    TargetFrame:SetPoint("CENTER", "WorldFrame", 114, -180)
+    TargetFrame:SetScale(0.9, 0.9)
     TargetFrame.SetPoint = function() end
 
     MoveStanceActionBar(6, -5)
@@ -239,4 +262,6 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     SetCVar("nameplateMinAlpha", 1)
 
     BottomUnitFrames()
+
+    ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
 end)
