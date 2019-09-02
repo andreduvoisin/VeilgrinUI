@@ -246,12 +246,12 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     MainMenuBar.SetPoint = function() end
 
     PlayerFrame:ClearAllPoints()
-    PlayerFrame:SetPoint("CENTER", "WorldFrame", -114, -180)
+    PlayerFrame:SetPoint("CENTER", "WorldFrame", -115, -180)
     PlayerFrame:SetScale(0.9, 0.9)
     PlayerFrame.SetPoint = function() end
 
     TargetFrame:ClearAllPoints()
-    TargetFrame:SetPoint("CENTER", "WorldFrame", 114, -180)
+    TargetFrame:SetPoint("CENTER", "WorldFrame", 115, -180)
     TargetFrame:SetScale(0.9, 0.9)
     TargetFrame.SetPoint = function() end
 
