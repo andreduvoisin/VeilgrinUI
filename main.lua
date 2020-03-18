@@ -230,7 +230,7 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 
     SetCVar("nameplateMinAlpha", 1)
 
-    BottomUnitFrames()
+    -- BottomUnitFrames()
 
     ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
 end)
