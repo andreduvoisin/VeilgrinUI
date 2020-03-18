@@ -221,7 +221,7 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     TargetFrame.SetPoint = function() end
 
     FocusFrame:ClearAllPoints()
-    FocusFrame:SetPoint("CENTER", "WorldFrame", 0, 0)
+    FocusFrame:SetPoint("CENTER", "WorldFrame", 330, -180)
     FocusFrame.SetPoint = function() end
 
     MoveStanceActionBar(6, -5)
