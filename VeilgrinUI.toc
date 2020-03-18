@@ -1,4 +1,4 @@
-## Interface: 80100
+## Interface: 80300
 ## Title: VeilgrinUI
 ## Author: Andre Duvoisin
 ## Version: 0.0.1

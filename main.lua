@@ -4,6 +4,7 @@ local function RemoveBottomActionBarStyling()
     MainMenuBarArtFrame.RightEndCap:Hide()
     MainMenuBarArtFrameBackground:Hide()
 
+    -- Removes the experience bar.
     StatusTrackingBarManager:Hide()
 
     ActionBarUpButton:Hide()
@@ -27,7 +28,7 @@ local function RemoveMenuMicroButtonAndBagsBar()
     MainMenuMicroButton:Hide()
 
     -- required because the game does an extra StoreMicroButton:Show() after login
-    StoreMicroButton:SetScript("OnShow", StoreMicroButton.Hide)
+    StoreMicroButton.Show = function() end
 end
 
 -- bottom right and bottom left are also anchored to the main action bar
@@ -198,27 +199,29 @@ end
 local EventFrame = CreateFrame("Frame")
 EventFrame:RegisterEvent("PLAYER_LOGIN")
 EventFrame:SetScript("OnEvent", function(self, event, ...)
+    ChatFrame1:AddMessage('(VeilgrinUI) Greetings, '..UnitName("Player")..'!')
+
     RemoveBottomActionBarStyling()
     RemoveMenuMicroButtonAndBagsBar()
     RemoveMacroNamesFromAllActionBars()
 
     CastingBarFrame:ClearAllPoints()
-    CastingBarFrame:SetPoint("CENTER", 0, -130)
+    CastingBarFrame:SetPoint("CENTER", "WorldFrame", 0, -115)
     CastingBarFrame.SetPoint = function() end
     
     RearrangeAllActionBarsHorizontal()
-    MoveAllActionBars(0, -300, 3)
+    MoveAllActionBars(0, -415, 3)
 
     PlayerFrame:ClearAllPoints()
-    PlayerFrame:SetPoint("CENTER", -200, 200)
+    PlayerFrame:SetPoint("CENTER", "WorldFrame", -115, -180)
     PlayerFrame.SetPoint = function() end
 
     TargetFrame:ClearAllPoints()
-    TargetFrame:SetPoint("CENTER", 200, 200)
+    TargetFrame:SetPoint("CENTER", "WorldFrame", 115, -180)
     TargetFrame.SetPoint = function() end
 
     FocusFrame:ClearAllPoints()
-    FocusFrame:SetPoint("CENTER", 0, 0)
+    FocusFrame:SetPoint("CENTER", "WorldFrame", 0, 0)
     FocusFrame.SetPoint = function() end
 
     MoveStanceActionBar(6, -5)
@@ -228,4 +231,6 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     SetCVar("nameplateMinAlpha", 1)
 
     BottomUnitFrames()
+
+    ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
 end)
