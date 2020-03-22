@@ -183,7 +183,7 @@ local function MoveStanceActionBar(offsetX, offsetY)
     button:SetPoint("CENTER", -693 + offsetX, 1061 + offsetY)
 end
 
-local function BottomUnitFrames()
+local function BottomRaidFrames()
     CRFSort_Group = function(team1, team2)
         if UnitIsUnit(team1, "player") then
             return false
@@ -194,6 +194,20 @@ local function BottomUnitFrames()
         end
     end
     CompactRaidFrameContainer.flowSortFunc=CRFSort_Group
+end
+
+local function ArenaPlateNumbers()
+    hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
+        if IsActiveBattlefieldArena() and frame.unit:find("nameplate") then
+            for i=1,5 do
+                if UnitIsUnit(frame.unit ,"arena"..i) then
+                    frame.name:SetText(i)
+                    frame.name:SetTextColor(1, 1, 0)
+                    break
+                end
+            end
+        end
+    end)
 end
 
 
@@ -233,7 +247,8 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 
     SetCVar("nameplateMinAlpha", 1)
 
-    -- BottomUnitFrames()
+    -- BottomRaidFrames()
+    ArenaPlateNumbers()
 
     ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
 end)
