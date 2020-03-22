@@ -239,8 +239,8 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 end)
 
 
-updateIntervalSeconds = 0.5;
-timeSinceLastUpdate = 0.0;
+local updateIntervalSeconds = 0.5;
+local timeSinceLastUpdate = 0.0;
 
 EventFrame:SetScript("OnUpdate", function(self, elapsed)
     timeSinceLastUpdate = timeSinceLastUpdate + elapsed;
