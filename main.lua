@@ -183,20 +183,26 @@ local function MoveStanceActionBar(offsetX, offsetY)
     button:SetPoint("CENTER", -693 + offsetX, 1061 + offsetY)
 end
 
-local function BottomRaidFrames()
-    CRFSort_Group = function(team1, team2)
-        if UnitIsUnit(team1, "player") then
-            return false
-        elseif UnitIsUnit(team2, "player") then
-            return true
-        else
-            return team1 < team2
-        end
-    end
-    CompactRaidFrameContainer.flowSortFunc=CRFSort_Group
+local defaultRaidFrameSortFunc = CompactRaidFrameContainer.flowSortFunc
+local function SetDefaultRaidFrameSort()
+    CompactRaidFrameContainer.flowSortFunc = defaultRaidFrameSortFunc
+    CompactRaidFrameContainer_TryUpdate(CompactRaidFrameContainer)
 end
 
-local function ArenaPlateNumbers()
+local function SetPlayerOnBottomRaidFrameSort()
+    CompactRaidFrameContainer.flowSortFunc = function(unit1, unit2)
+        if UnitIsUnit(unit1, "player") then
+            return false
+        elseif UnitIsUnit(unit2, "player") then
+            return true
+        else
+            return unit1 < unit2
+        end
+    end
+    CompactRaidFrameContainer_TryUpdate(CompactRaidFrameContainer)
+end
+
+local function EnableArenaNameplateNumbers()
     hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
         if IsActiveBattlefieldArena() and frame.unit:find("nameplate") then
             for i=1,5 do
@@ -247,8 +253,7 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 
     SetCVar("nameplateMinAlpha", 1)
 
-    -- BottomRaidFrames()
-    ArenaPlateNumbers()
+    EnableArenaNameplateNumbers()
 
     ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
 end)
@@ -261,6 +266,13 @@ EventFrame:SetScript("OnUpdate", function(self, elapsed)
     timeSinceLastUpdate = timeSinceLastUpdate + elapsed;
 
     if (timeSinceLastUpdate < updateIntervalSeconds) then return end
+
+    -- TODO: Should happen on player load into zone instead of on update. (How do you do this?)
+    if IsActiveBattlefieldArena() then
+        SetPlayerOnBottomRaidFrameSort()
+    else
+        SetDefaultRaidFrameSort()
+    end
 
     -- The extra button that appears for special mechanics.
     -- e.g. use Heart of Azeroth, clear Sanity
