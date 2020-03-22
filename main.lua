@@ -223,6 +223,11 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     FocusFrame:ClearAllPoints()
     FocusFrame:SetPoint("CENTER", "WorldFrame", 330, -180)
     FocusFrame.SetPoint = function() end
+    
+    -- The extra button that sometimes appears for quests.
+    -- e.g. use Heart of Azeroth, clear Sanity
+    ExtraActionButton1:ClearAllPoints()
+    ExtraActionButton1:SetPoint("CENTER", "WorldFrame", 0, -550)
 
     MoveStanceActionBar(6, -5)
 
