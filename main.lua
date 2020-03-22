@@ -224,10 +224,13 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     FocusFrame:SetPoint("CENTER", "WorldFrame", 330, -180)
     FocusFrame.SetPoint = function() end
     
-    -- The extra button that sometimes appears for quests.
+    -- The extra button that sometimes appears for special mechanics.
     -- e.g. use Heart of Azeroth, clear Sanity
     ExtraActionButton1:ClearAllPoints()
     ExtraActionButton1:SetPoint("CENTER", "WorldFrame", 0, -550)
+    -- Move this to the strata of the menu bar. Defaults to LOW for ExtraActionButton1.
+    -- The menu bar is in MEDIUM, but invisible, so it eats input events.
+    ExtraActionButton1:SetFrameStrata("MEDIUM")
 
     MoveStanceActionBar(6, -5)
 
