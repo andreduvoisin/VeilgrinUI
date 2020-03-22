@@ -196,8 +196,11 @@ local function BottomUnitFrames()
     CompactRaidFrameContainer.flowSortFunc=CRFSort_Group
 end
 
+
 local EventFrame = CreateFrame("Frame")
+
 EventFrame:RegisterEvent("PLAYER_LOGIN")
+
 EventFrame:SetScript("OnEvent", function(self, event, ...)
     ChatFrame1:AddMessage('(VeilgrinUI) Greetings, '..UnitName("Player")..'!')
 
@@ -223,14 +226,6 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     FocusFrame:ClearAllPoints()
     FocusFrame:SetPoint("CENTER", "WorldFrame", 330, -180)
     FocusFrame.SetPoint = function() end
-    
-    -- The extra button that sometimes appears for special mechanics.
-    -- e.g. use Heart of Azeroth, clear Sanity
-    ExtraActionButton1:ClearAllPoints()
-    ExtraActionButton1:SetPoint("CENTER", "WorldFrame", 0, -550)
-    -- Move this to the strata of the menu bar. Defaults to LOW for ExtraActionButton1.
-    -- The menu bar is in MEDIUM, but invisible, so it eats input events.
-    ExtraActionButton1:SetFrameStrata("MEDIUM")
 
     MoveStanceActionBar(6, -5)
 
@@ -241,4 +236,28 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     -- BottomUnitFrames()
 
     ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
+end)
+
+
+updateIntervalSeconds = 0.5;
+timeSinceLastUpdate = 0.0;
+
+EventFrame:SetScript("OnUpdate", function(self, elapsed)
+    timeSinceLastUpdate = timeSinceLastUpdate + elapsed;
+
+    if (timeSinceLastUpdate < updateIntervalSeconds) then return end
+
+    -- The extra button that appears for special mechanics.
+    -- e.g. use Heart of Azeroth, clear Sanity
+    ExtraActionButton1:ClearAllPoints()
+    ExtraActionButton1:SetPoint("CENTER", "WorldFrame", 0, -550)
+    -- Move the strata of the menu bar. Defaults to LOW for ExtraActionButton1.
+    -- The menu bar is invisible and on top of the extra action button in MEDIUM, so it eats input events.
+    ExtraActionButton1:SetFrameStrata("MEDIUM")
+    
+    -- The extra information bar that appears for special mechanics.
+    PlayerPowerBarAlt:ClearAllPoints()
+    PlayerPowerBarAlt:SetPoint("CENTER", "WorldFrame", 0, -300)
+    
+    timeSinceLastUpdate = 0;
 end)
