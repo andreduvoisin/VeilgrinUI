@@ -1,11 +1,16 @@
 
+local function RemoveExperienceBarAtMaxLevel()
+    local expansion = GetAccountExpansionLevel()
+    local maxPlayerLevel = MAX_PLAYER_LEVEL_TABLE[expansion]
+    if UnitLevel("player") == maxPlayerLevel then
+        StatusTrackingBarManager:Hide()
+    end
+end
+
 local function RemoveBottomActionBarStyling()
     MainMenuBarArtFrame.LeftEndCap:Hide()
     MainMenuBarArtFrame.RightEndCap:Hide()
     MainMenuBarArtFrameBackground:Hide()
-
-    -- Removes the experience bar.
-    StatusTrackingBarManager:Hide()
 
     ActionBarUpButton:Hide()
     ActionBarDownButton:Hide()
@@ -186,7 +191,6 @@ end
 local defaultRaidFrameSortFunc = CompactRaidFrameContainer.flowSortFunc
 local function SetDefaultRaidFrameSort()
     CompactRaidFrameContainer.flowSortFunc = defaultRaidFrameSortFunc
-    CompactRaidFrameContainer_TryUpdate(CompactRaidFrameContainer)
 end
 
 local function SetPlayerOnBottomRaidFrameSort()
@@ -199,6 +203,9 @@ local function SetPlayerOnBottomRaidFrameSort()
             return unit1 < unit2
         end
     end
+end
+
+local function UpdateRaidFrames()
     CompactRaidFrameContainer_TryUpdate(CompactRaidFrameContainer)
 end
 
@@ -216,15 +223,11 @@ local function EnableArenaNameplateNumbers()
     end)
 end
 
-
-local EventFrame = CreateFrame("Frame")
-
-EventFrame:RegisterEvent("PLAYER_LOGIN")
-
-EventFrame:SetScript("OnEvent", function(self, event, ...)
+local function OnPlayerLogin(self)
     ChatFrame1:AddMessage('(VeilgrinUI) Greetings, '..UnitName("Player")..'!')
 
     RemoveBottomActionBarStyling()
+    RemoveExperienceBarAtMaxLevel()
     RemoveMenuMicroButtonAndBagsBar()
     RemoveMacroNamesFromAllActionBars()
 
@@ -256,6 +259,34 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     EnableArenaNameplateNumbers()
 
     ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
+end
+
+local function OnPlayerEnteringWorld(self, isInitialLogin, isReloadingUi)
+    if IsActiveBattlefieldArena() then
+        SetPlayerOnBottomRaidFrameSort()
+    else
+        SetDefaultRaidFrameSort()
+    end
+    UpdateRaidFrames()
+
+    ChatFrame1:AddMessage('(VeilgrinUI) Lok\'tar ogar!')
+end
+
+
+local EVENT_PLAYER_LOGIN = "PLAYER_LOGIN"
+local EVENT_PLAYER_ENTERING_WORLD = "PLAYER_ENTERING_WORLD"
+
+local EventFrame = CreateFrame("Frame")
+
+EventFrame:RegisterEvent(EVENT_PLAYER_LOGIN)
+EventFrame:RegisterEvent(EVENT_PLAYER_ENTERING_WORLD)
+
+EventFrame:SetScript("OnEvent", function(self, event, ...)
+    if event == EVENT_PLAYER_LOGIN then
+        OnPlayerLogin(self)
+    elseif event == EVENT_PLAYER_ENTERING_WORLD then
+        OnPlayerEnteringWorld(self, ...)
+    end
 end)
 
 
@@ -266,13 +297,6 @@ EventFrame:SetScript("OnUpdate", function(self, elapsed)
     timeSinceLastUpdate = timeSinceLastUpdate + elapsed;
 
     if (timeSinceLastUpdate < updateIntervalSeconds) then return end
-
-    -- TODO: Should happen on player load into zone instead of on update. (How do you do this?)
-    if IsActiveBattlefieldArena() then
-        SetPlayerOnBottomRaidFrameSort()
-    else
-        SetDefaultRaidFrameSort()
-    end
 
     -- The extra button that appears for special mechanics.
     -- e.g. use Heart of Azeroth, clear Sanity
