@@ -18,6 +18,5 @@ World of Warcraft AddOn for a default yet minimalistic user interface
 - Tooltips
 - Exit Vehicle
 - Focus Frame
-- Self / Target Frames
 - Arena Frames
 - Boss Frames

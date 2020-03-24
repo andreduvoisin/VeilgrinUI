@@ -262,12 +262,12 @@ local function OnPlayerLogin(self)
 end
 
 local function OnPlayerEnteringWorld(self, isInitialLogin, isReloadingUi)
-    if IsActiveBattlefieldArena() then
-        SetPlayerOnBottomRaidFrameSort()
-    else
-        SetDefaultRaidFrameSort()
-    end
-    UpdateRaidFrames()
+    -- if IsActiveBattlefieldArena() then
+    --     SetPlayerOnBottomRaidFrameSort()
+    -- else
+    --     SetDefaultRaidFrameSort()
+    -- end
+    -- UpdateRaidFrames()
 
     ChatFrame1:AddMessage('(VeilgrinUI) Lok\'tar ogar!')
 end
