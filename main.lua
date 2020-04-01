@@ -223,6 +223,14 @@ local function EnableArenaNameplateNumbers()
     end)
 end
 
+-- This prevents icons from being animated onto the main action bar when you learn them.
+-- For example, when you switch talents but you have available "first action bar" slots,
+-- the game will automatically add the talents to your action bar. This stops that from happening.
+local function DisableAutoAddSpellsToActionBar()
+    IconIntroTracker.RegisterEvent = function() end
+    IconIntroTracker:UnregisterEvent('SPELL_PUSHED_TO_ACTIONBAR')
+end
+
 local function OnPlayerLogin(self)
     ChatFrame1:AddMessage('(VeilgrinUI) Greetings, '..UnitName("Player")..'!')
 
@@ -257,6 +265,8 @@ local function OnPlayerLogin(self)
     SetCVar("nameplateMinAlpha", 1)
 
     EnableArenaNameplateNumbers()
+
+    DisableAutoAddSpellsToActionBar()
 
     ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
 end
