@@ -17,23 +17,14 @@ local function RemoveBottomActionBarStyling()
     MainMenuBarArtFrame.PageNumber:SetAlpha(0)
 end
 
+-- Reference:
+-- https://git.tukui.org/elvui/elvui/-/blob/master/ElvUI/Modules/ActionBars/ActionBars.lua#L741
+-- Search for "DisableBlizzard" if line number is no longer correct.
 local function RemoveMenuMicroButtonAndBagsBar()
-    MicroButtonAndBagsBar:Hide()
-
-    CharacterMicroButton:Hide()
-    SpellbookMicroButton:Hide()
-    TalentMicroButton:Hide()
-    AchievementMicroButton:Hide()
-    QuestLogMicroButton:Hide()
-    GuildMicroButton:Hide()
-    LFDMicroButton:Hide()
-    CollectionsMicroButton:Hide()
-    EJMicroButton:Hide()
-    StoreMicroButton:Hide()
-    MainMenuMicroButton:Hide()
-
-    -- required because the game does an extra StoreMicroButton:Show() after login
-    StoreMicroButton.Show = function() end
+    MicroButtonAndBagsBar:SetScale(0.00001)
+    MicroButtonAndBagsBar:EnableMouse(false)
+    MicroButtonAndBagsBar:SetFrameStrata('BACKGROUND')
+    MicroButtonAndBagsBar:SetFrameLevel(0)
 end
 
 -- bottom right and bottom left are also anchored to the main action bar
