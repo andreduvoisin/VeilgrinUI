@@ -1,4 +1,5 @@
 
+-- This function is broken in Shadowlands.
 local function RemoveExperienceBarAtMaxLevel()
     local expansion = GetAccountExpansionLevel()
     local maxPlayerLevel = MAX_PLAYER_LEVEL_TABLE[expansion]
@@ -226,7 +227,7 @@ local function OnPlayerLogin(self)
     ChatFrame1:AddMessage('(VeilgrinUI) Greetings, '..UnitName("Player")..'!')
 
     RemoveBottomActionBarStyling()
-    RemoveExperienceBarAtMaxLevel()
+    -- RemoveExperienceBarAtMaxLevel()
     RemoveMenuMicroButtonAndBagsBar()
     RemoveMacroNamesFromAllActionBars()
 
