@@ -129,6 +129,10 @@ local STANCE_BAR_BUTTON_NAMES = {
     STANCE_BAR_FIRST_BUTTON..6
 }
 
+local ACTION_BAR_FRAME = CreateFrame("Frame", "VeilgrinUIActionBarFrame", UIParent)
+ACTION_BAR_FRAME:SetFrameStrata("MEDIUM")
+ACTION_BAR_FRAME:Show()
+
 local function RearrangeActionBarHorizontal(names, horizontalSpacing)
     for i = 2, table.getn(names) do
         local button = _G[names[i]]
@@ -163,54 +167,59 @@ end
 local function MoveActionBarCenterPoint(name, x, y)
     local button = _G[name]
     button:ClearAllPoints()
-    button:SetPoint("CENTER", x, y)
+    -- button:SetPoint("CENTER", x, y)
     -- button:SetPoint("TOPLEFT", UIParent, "CENTER", x, y)
+    button:SetPoint("TOPLEFT", ACTION_BAR_FRAME, "TOPLEFT", x, y)
 end
 
 -- I have no idea why offsetY works the way it does.
 -- Something is screwed up with what these are actually anchored to / parented from.
-local function MoveAllActionBars(offsetX, offsetY, verticalSpacing)
-    MoveActionBarCenterPoint(
-        FIRST_ACTION_BAR_BUTTON_NAMES[1],
-        -314 + offsetX,
-        613 + offsetY)
-    MoveActionBarCenterPoint(
-        SECOND_ACTION_BAR_BUTTON_NAMES[1],
-        -232 + offsetX,
-        229 + (offsetY / 2) + (-verticalSpacing))
-    MoveActionBarCenterPoint(
-        THIRD_ACTION_BAR_BUTTON_NAMES[1],
-        -650 + offsetX,
-        -85 + (-verticalSpacing * 2))
-    MoveActionBarCenterPoint(
-        FOURTH_ACTION_BAR_BUTTON_NAMES[1],
-        -1233 + offsetX,
-        -20 + offsetY + (-verticalSpacing * 3))
-end
-
 -- local function MoveAllActionBars(offsetX, offsetY, verticalSpacing)
---     local horizontalSpacing = 6
-
---     local screenHeight = GetScreenHeight() * UIParent:GetEffectiveScale()
---     ChatFrame1:AddMessage('(VeilgrinUI) '..GetScreenHeight()..' '..UIParent:GetEffectiveScale()..' '..screenHeight)
-
 --     MoveActionBarCenterPoint(
 --         FIRST_ACTION_BAR_BUTTON_NAMES[1],
---         -GetActionBarWidth(FIRST_ACTION_BAR_BUTTON_NAMES, horizontalSpacing) / 2,
---         0)
+--         -314 + offsetX,
+--         613 + offsetY)
 --     MoveActionBarCenterPoint(
 --         SECOND_ACTION_BAR_BUTTON_NAMES[1],
---         -GetActionBarWidth(SECOND_ACTION_BAR_BUTTON_NAMES, horizontalSpacing) / 2,
---         -GetActionBarHeight(FIRST_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing)
+--         -232 + offsetX,
+--         229 + (offsetY / 2) + (-verticalSpacing))
 --     MoveActionBarCenterPoint(
 --         THIRD_ACTION_BAR_BUTTON_NAMES[1],
---         -GetActionBarWidth(THIRD_ACTION_BAR_BUTTON_NAMES, horizontalSpacing) / 2,
---         (-GetActionBarHeight(SECOND_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing) * 2)
+--         -650 + offsetX,
+--         -85 + (-verticalSpacing * 2))
 --     MoveActionBarCenterPoint(
 --         FOURTH_ACTION_BAR_BUTTON_NAMES[1],
---         -GetActionBarWidth(FOURTH_ACTION_BAR_BUTTON_NAMES, horizontalSpacing) / 2,
---         (-GetActionBarHeight(THIRD_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing) * 3)
+--         -1233 + offsetX,
+--         -20 + offsetY + (-verticalSpacing * 3))
 -- end
+
+local function MoveAllActionBars(offsetX, offsetY, verticalSpacing)
+    local horizontalSpacing = 6
+
+    local actionBarFrameWidth = GetActionBarWidth(FIRST_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)
+    ACTION_BAR_FRAME:SetWidth(actionBarFrameWidth)
+    local actionBarFrameHeight = (GetActionBarHeight(FIRST_ACTION_BAR_BUTTON_NAMES) * 4) + (verticalSpacing * 3)
+    ACTION_BAR_FRAME:SetHeight(actionBarFrameHeight)
+
+    MoveActionBarCenterPoint(
+        FIRST_ACTION_BAR_BUTTON_NAMES[1],
+        0,
+        0)
+    MoveActionBarCenterPoint(
+        SECOND_ACTION_BAR_BUTTON_NAMES[1],
+        0,
+        -GetActionBarHeight(FIRST_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing)
+    MoveActionBarCenterPoint(
+        THIRD_ACTION_BAR_BUTTON_NAMES[1],
+        0,
+        (-GetActionBarHeight(SECOND_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing) * 2)
+    MoveActionBarCenterPoint(
+        FOURTH_ACTION_BAR_BUTTON_NAMES[1],
+        (actionBarFrameWidth - GetActionBarWidth(FOURTH_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)) / 2,
+        (-GetActionBarHeight(THIRD_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing) * 3)
+    
+    ACTION_BAR_FRAME:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, GetScreenHeight() * (5/64))
+end
 
 local function MoveStanceActionBar(offsetX, offsetY)
     local button = _G[STANCE_BAR_BUTTON_NAMES[1]]
@@ -274,8 +283,8 @@ local function OnPlayerLogin(self)
     CastingBarFrame.SetPoint = function() end
     
     RearrangeAllActionBarsHorizontal()
-    MoveAllActionBars(0, -415, 3)
-    -- MoveAllActionBars(0, 0, 6)
+    -- MoveAllActionBars(0, -415, 3)
+    MoveAllActionBars(0, 0, 6)
 
     PlayerFrame:ClearAllPoints()
     PlayerFrame:SetPoint("CENTER", UIParent, "CENTER", -115, -180)
