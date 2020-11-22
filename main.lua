@@ -170,7 +170,7 @@ local function MoveActionBarCenterPoint(name, x, y)
     button:SetPoint("TOPLEFT", ACTION_BAR_FRAME, "TOPLEFT", x, y)
 end
 
-local function MoveAllActionBars(offsetX, offsetY, verticalSpacing)
+local function MoveAllActionBars(offsetY, verticalSpacing)
     local horizontalSpacing = 6
 
     local actionBarFrameWidth = GetActionBarWidth(FIRST_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)
@@ -195,7 +195,7 @@ local function MoveAllActionBars(offsetX, offsetY, verticalSpacing)
         (actionBarFrameWidth - GetActionBarWidth(FOURTH_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)) / 2,
         (-GetActionBarHeight(THIRD_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing) * 3)
     
-    ACTION_BAR_FRAME:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, GetScreenHeight() * (5/64))
+    ACTION_BAR_FRAME:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, offsetY)
 end
 
 local function MoveStanceActionBar(offsetX, offsetY)
@@ -261,7 +261,7 @@ local function OnPlayerLogin(self)
     CastingBarFrame.SetPoint = function() end
     
     RearrangeAllActionBarsHorizontal()
-    MoveAllActionBars(0, 0, 6)
+    MoveAllActionBars(102, 6)
 
     PlayerFrame:ClearAllPoints()
     PlayerFrame:SetPoint("CENTER", UIParent, "CENTER", -115, -180)
