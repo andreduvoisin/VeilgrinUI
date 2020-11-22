@@ -257,6 +257,7 @@ local function OnPlayerLogin(self)
 
     CastingBarFrame:ClearAllPoints()
     CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -115)
+    CastingBarFrame.ClearAllPoints = function() end
     CastingBarFrame.SetPoint = function() end
     
     RearrangeAllActionBarsHorizontal()
@@ -264,15 +265,23 @@ local function OnPlayerLogin(self)
 
     PlayerFrame:ClearAllPoints()
     PlayerFrame:SetPoint("CENTER", UIParent, "CENTER", -115, -180)
+    PlayerFrame.ClearAllPoints = function() end
     PlayerFrame.SetPoint = function() end
 
     TargetFrame:ClearAllPoints()
     TargetFrame:SetPoint("CENTER", UIParent, "CENTER", 115, -180)
+    TargetFrame.ClearAllPoints = function() end
     TargetFrame.SetPoint = function() end
 
     FocusFrame:ClearAllPoints()
     FocusFrame:SetPoint("CENTER", UIParent, "CENTER", 330, -180)
+    FocusFrame.ClearAllPoints = function() end
     FocusFrame.SetPoint = function() end
+
+    ObjectiveTrackerFrame:ClearAllPoints()
+    ObjectiveTrackerFrame:SetPoint("TOPRIGHT", MinimapCluster, "BOTTOMRIGHT", 0, 0)
+    ObjectiveTrackerFrame.ClearAllPoints = function() end
+    ObjectiveTrackerFrame.SetPoint = function() end
 
     MoveStanceActionBar(6, -5)
 
