@@ -16,6 +16,10 @@ World of Warcraft AddOn for a default yet minimalistic user interface
     - https://github.com/Stanzilla/WoWUIBugs/wiki/9.0.1-Consolidated-UI-Changes
 - https://us.forums.blizzard.com/en/wow/c/guides/ui-macro/35
 - https://discord.gg/bZ2XhvWj
+- https://github.com/Gethe/wow-ui-source
+- https://www.townlong-yak.com/globe/
+- https://www.townlong-yak.com/framexml/latest/Blizzard_APIDocumentation
+- https://mrbuds.github.io/wow-api-web/
 
 ## TODO
 
