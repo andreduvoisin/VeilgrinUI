@@ -145,10 +145,26 @@ local function RearrangeAllActionBarsHorizontal()
     RearrangeActionBarHorizontal(FOURTH_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)
 end
 
+local function GetActionBarWidth(names, horizontalSpacing)
+    local width = 0
+    for i = 1, table.getn(names) do
+        local button = _G[names[i]]
+        width = width + button:GetWidth()
+    end
+    width = width + ((table.getn(names) - 1) * horizontalSpacing)
+    return width
+end
+
+local function GetActionBarHeight(names)
+    local button = _G[names[1]]
+    return button:GetHeight()
+end
+
 local function MoveActionBarCenterPoint(name, x, y)
     local button = _G[name]
     button:ClearAllPoints()
     button:SetPoint("CENTER", x, y)
+    -- button:SetPoint("TOPLEFT", UIParent, "CENTER", x, y)
 end
 
 -- I have no idea why offsetY works the way it does.
@@ -172,10 +188,34 @@ local function MoveAllActionBars(offsetX, offsetY, verticalSpacing)
         -20 + offsetY + (-verticalSpacing * 3))
 end
 
+-- local function MoveAllActionBars(offsetX, offsetY, verticalSpacing)
+--     local horizontalSpacing = 6
+
+--     local screenHeight = GetScreenHeight() * UIParent:GetEffectiveScale()
+--     ChatFrame1:AddMessage('(VeilgrinUI) '..GetScreenHeight()..' '..UIParent:GetEffectiveScale()..' '..screenHeight)
+
+--     MoveActionBarCenterPoint(
+--         FIRST_ACTION_BAR_BUTTON_NAMES[1],
+--         -GetActionBarWidth(FIRST_ACTION_BAR_BUTTON_NAMES, horizontalSpacing) / 2,
+--         0)
+--     MoveActionBarCenterPoint(
+--         SECOND_ACTION_BAR_BUTTON_NAMES[1],
+--         -GetActionBarWidth(SECOND_ACTION_BAR_BUTTON_NAMES, horizontalSpacing) / 2,
+--         -GetActionBarHeight(FIRST_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing)
+--     MoveActionBarCenterPoint(
+--         THIRD_ACTION_BAR_BUTTON_NAMES[1],
+--         -GetActionBarWidth(THIRD_ACTION_BAR_BUTTON_NAMES, horizontalSpacing) / 2,
+--         (-GetActionBarHeight(SECOND_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing) * 2)
+--     MoveActionBarCenterPoint(
+--         FOURTH_ACTION_BAR_BUTTON_NAMES[1],
+--         -GetActionBarWidth(FOURTH_ACTION_BAR_BUTTON_NAMES, horizontalSpacing) / 2,
+--         (-GetActionBarHeight(THIRD_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing) * 3)
+-- end
+
 local function MoveStanceActionBar(offsetX, offsetY)
     local button = _G[STANCE_BAR_BUTTON_NAMES[1]]
     button:ClearAllPoints()
-    button:SetPoint("CENTER", -693 + offsetX, 1061 + offsetY)
+    button:SetPoint("TOPLEFT", UIParent, "TOPLEFT", offsetX, offsetY)
 end
 
 local defaultRaidFrameSortFunc = CompactRaidFrameContainer.flowSortFunc
@@ -230,22 +270,23 @@ local function OnPlayerLogin(self)
     RemoveMacroNamesFromAllActionBars()
 
     CastingBarFrame:ClearAllPoints()
-    CastingBarFrame:SetPoint("CENTER", "WorldFrame", 0, -115)
+    CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -115)
     CastingBarFrame.SetPoint = function() end
     
     RearrangeAllActionBarsHorizontal()
     MoveAllActionBars(0, -415, 3)
+    -- MoveAllActionBars(0, 0, 6)
 
     PlayerFrame:ClearAllPoints()
-    PlayerFrame:SetPoint("CENTER", "WorldFrame", -115, -180)
+    PlayerFrame:SetPoint("CENTER", UIParent, "CENTER", -115, -180)
     PlayerFrame.SetPoint = function() end
 
     TargetFrame:ClearAllPoints()
-    TargetFrame:SetPoint("CENTER", "WorldFrame", 115, -180)
+    TargetFrame:SetPoint("CENTER", UIParent, "CENTER", 115, -180)
     TargetFrame.SetPoint = function() end
 
     FocusFrame:ClearAllPoints()
-    FocusFrame:SetPoint("CENTER", "WorldFrame", 330, -180)
+    FocusFrame:SetPoint("CENTER", UIParent, "CENTER", 330, -180)
     FocusFrame.SetPoint = function() end
 
     MoveStanceActionBar(6, -5)
@@ -301,14 +342,14 @@ EventFrame:SetScript("OnUpdate", function(self, elapsed)
     -- The extra button that appears for special mechanics.
     -- e.g. use Heart of Azeroth, clear Sanity
     ExtraActionButton1:ClearAllPoints()
-    ExtraActionButton1:SetPoint("CENTER", "WorldFrame", 0, -550)
+    ExtraActionButton1:SetPoint("CENTER", UIParent, "CENTER", 0, -550)
     -- Move the strata of the menu bar. Defaults to LOW for ExtraActionButton1.
     -- The menu bar is invisible and on top of the extra action button in MEDIUM, so it eats input events.
     ExtraActionButton1:SetFrameStrata("MEDIUM")
     
     -- The extra information bar that appears for special mechanics.
     PlayerPowerBarAlt:ClearAllPoints()
-    PlayerPowerBarAlt:SetPoint("CENTER", "WorldFrame", 0, -300)
+    PlayerPowerBarAlt:SetPoint("CENTER", UIParent, "CENTER", 0, -300)
     
     timeSinceLastUpdate = 0;
 end)
