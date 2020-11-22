@@ -167,31 +167,8 @@ end
 local function MoveActionBarCenterPoint(name, x, y)
     local button = _G[name]
     button:ClearAllPoints()
-    -- button:SetPoint("CENTER", x, y)
-    -- button:SetPoint("TOPLEFT", UIParent, "CENTER", x, y)
     button:SetPoint("TOPLEFT", ACTION_BAR_FRAME, "TOPLEFT", x, y)
 end
-
--- I have no idea why offsetY works the way it does.
--- Something is screwed up with what these are actually anchored to / parented from.
--- local function MoveAllActionBars(offsetX, offsetY, verticalSpacing)
---     MoveActionBarCenterPoint(
---         FIRST_ACTION_BAR_BUTTON_NAMES[1],
---         -314 + offsetX,
---         613 + offsetY)
---     MoveActionBarCenterPoint(
---         SECOND_ACTION_BAR_BUTTON_NAMES[1],
---         -232 + offsetX,
---         229 + (offsetY / 2) + (-verticalSpacing))
---     MoveActionBarCenterPoint(
---         THIRD_ACTION_BAR_BUTTON_NAMES[1],
---         -650 + offsetX,
---         -85 + (-verticalSpacing * 2))
---     MoveActionBarCenterPoint(
---         FOURTH_ACTION_BAR_BUTTON_NAMES[1],
---         -1233 + offsetX,
---         -20 + offsetY + (-verticalSpacing * 3))
--- end
 
 local function MoveAllActionBars(offsetX, offsetY, verticalSpacing)
     local horizontalSpacing = 6
@@ -283,7 +260,6 @@ local function OnPlayerLogin(self)
     CastingBarFrame.SetPoint = function() end
     
     RearrangeAllActionBarsHorizontal()
-    -- MoveAllActionBars(0, -415, 3)
     MoveAllActionBars(0, 0, 6)
 
     PlayerFrame:ClearAllPoints()
