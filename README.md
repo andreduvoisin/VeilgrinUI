@@ -13,7 +13,7 @@ World of Warcraft AddOn for a default yet minimalistic user interface
 - `BugGrabber` and `BugSack` addons for error detection
 - `Screen Overlay: Enhanced` addon for an on-screen grid
 - https://wow.gamepedia.com/API_change_summaries
-    - https://github.com/Stanzilla/WoWUIBugs/wiki/9.0.1-Consolidated-UI-Changes
+  - https://github.com/Stanzilla/WoWUIBugs/wiki/9.0.1-Consolidated-UI-Changes
 - https://us.forums.blizzard.com/en/wow/c/guides/ui-macro/35
 - https://discord.gg/bZ2XhvWj
 - https://github.com/Gethe/wow-ui-source
@@ -25,6 +25,7 @@ World of Warcraft AddOn for a default yet minimalistic user interface
 
 - Tooltips
 - Exit Vehicle
+- Exit Flight Path
 - Focus Frame
 - Arena Frames
 - Boss Frames
