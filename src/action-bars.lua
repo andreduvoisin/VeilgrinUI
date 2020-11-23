@@ -97,6 +97,7 @@ local ACTION_BARS_OFFSET_Y = 102
 -- By default, MultiBarLeft and MultiBarRight (the two extra vertical action bars on the
 -- right side of the screen) scale dynamically with available space, making the action buttons
 -- smaller on lower resolutions. This forces the action buttons to be full size.
+-- https://github.com/Gethe/wow-ui-source/blob/1cf759abedf90eaf4adaa1be3629855626c2d998/FrameXML/MultiActionBars.lua#L92-L100
 local function ForceVerticalMultiBarFullSize()
     MultiBarLeft:SetScale(1)
     MultiBarLeft.SetScale = function() end
