@@ -92,6 +92,8 @@ ACTION_BARS_FRAME:Show()
 local ACTION_BAR_BUTTON_HORIZONTAL_SPACING = 6
 local ACTION_BAR_VERTICAL_SPACING = 6
 
+local ACTION_BARS_OFFSET_Y = 102
+
 local function RemoveMacroNamesFromActionBar(bar)
     for i = 1, table.getn(bar) do
         _G[bar[i].."Name"]:SetAlpha(0)
@@ -204,7 +206,7 @@ local function InitializeActionBars()
     RemoveMacroNamesFromActionBars()
 
     RearrangeActionBarsHorizontal()
-    PositionActionBars(102)
+    PositionActionBars(ACTION_BARS_OFFSET_Y)
 
     DisableAutoAddSpellsToActionBars()
 end

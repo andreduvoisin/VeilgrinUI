@@ -1,5 +1,14 @@
 local addonName, addonTable = ...
 
+local PLAYER_FRAME_OFFSET_X = -115
+local PLAYER_FRAME_OFFSET_Y = -180
+
+local TARGET_FRAME_OFFSET_X = 115
+local TARGET_FRAME_OFFSET_Y = -180
+
+local FOCUS_FRAME_OFFSET_X = 330
+local FOCUS_FRAME_OFFSET_Y = -180
+
 local function MoveUnitFrame(frame, offsetX, offsetY)
     frame:ClearAllPoints()
     frame:SetPoint("CENTER", UIParent, "CENTER", offsetX, offsetY)
@@ -8,9 +17,9 @@ local function MoveUnitFrame(frame, offsetX, offsetY)
 end
 
 local function InitializeUnitFrames()
-    MoveUnitFrame(PlayerFrame, -115, -180)
-    MoveUnitFrame(TargetFrame, 115, -180)
-    MoveUnitFrame(FocusFrame, 330, -180)
+    MoveUnitFrame(PlayerFrame, PLAYER_FRAME_OFFSET_X, PLAYER_FRAME_OFFSET_Y)
+    MoveUnitFrame(TargetFrame, TARGET_FRAME_OFFSET_X, TARGET_FRAME_OFFSET_Y)
+    MoveUnitFrame(FocusFrame, FOCUS_FRAME_OFFSET_X, FOCUS_FRAME_OFFSET_Y)
 end
 
 addonTable.InitializeUnitFrames = InitializeUnitFrames

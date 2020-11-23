@@ -1,14 +1,20 @@
 local addonName, addonTable = ...
 
-local function MoveCastBar(offsetX, offsetY)
+local CAST_BAR_OFFSET_X = 0
+local CAST_BAR_OFFSET_Y = -115
+
+local function MoveCastBar()
     CastingBarFrame:ClearAllPoints()
-    CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", offsetX, offsetY)
+    CastingBarFrame:SetPoint(
+        "CENTER",
+        UIParent, "CENTER",
+        CAST_BAR_OFFSET_X, CAST_BAR_OFFSET_Y)
     CastingBarFrame.ClearAllPoints = function() end
     CastingBarFrame.SetPoint = function() end
 end
 
 local function InitializeCastBar()
-    MoveCastBar(0, -115)
+    MoveCastBar()
 end
 
 addonTable.InitializeCastBar = InitializeCastBar

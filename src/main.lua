@@ -40,7 +40,7 @@ local function OnUpdate(self, deltaSeconds)
 
     addonTable.UpdateSpecialMechanics()
     
-    TIME_SINCE_LAST_TICK_SECONDS = 0;
+    TIME_SINCE_LAST_TICK_SECONDS = 0.0;
 end
 
 

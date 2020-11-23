@@ -13,6 +13,9 @@ local STANCE_BAR = {
 
 local STANCE_BAR_BUTTON_HORIZONTAL_SPACING = 4
 
+local STANCE_BAR_OFFSET_X = 6
+local STANCE_BAR_OFFSET_Y = -5
+
 local function RearrangeStanceBarHorizontal()
     for i = 2, table.getn(STANCE_BAR) do
         local button = _G[STANCE_BAR[i]]
@@ -29,7 +32,7 @@ end
 
 local function InitializeStanceBar()
     RearrangeStanceBarHorizontal()
-    MoveStanceBar(6, -5)
+    MoveStanceBar(STANCE_BAR_OFFSET_X, STANCE_BAR_OFFSET_Y)
 end
 
 addonTable.InitializeStanceBar = InitializeStanceBar
