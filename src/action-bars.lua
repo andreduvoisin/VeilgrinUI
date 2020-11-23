@@ -94,6 +94,16 @@ local ACTION_BAR_VERTICAL_SPACING = 6
 
 local ACTION_BARS_OFFSET_Y = 102
 
+-- By default, MultiBarLeft and MultiBarRight (the two extra vertical action bars on the
+-- right side of the screen) scale dynamically with available space, making the action buttons
+-- smaller on lower resolutions. This forces the action buttons to be full size.
+local function ForceVerticalMultiBarFullSize()
+    MultiBarLeft:SetScale(1)
+    MultiBarLeft.SetScale = function() end
+    MultiBarRight:SetScale(1)
+    MultiBarRight.SetScale = function() end
+end
+
 local function RemoveMacroNamesFromActionBar(bar)
     for i = 1, table.getn(bar) do
         _G[bar[i].."Name"]:SetAlpha(0)
@@ -204,6 +214,7 @@ end
 
 local function InitializeActionBars()
     RemoveMacroNamesFromActionBars()
+    ForceVerticalMultiBarFullSize()
 
     RearrangeActionBarsHorizontal()
     PositionActionBars(ACTION_BARS_OFFSET_Y)
