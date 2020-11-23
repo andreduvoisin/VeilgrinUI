@@ -1,3 +1,4 @@
+local addonName, addonTable = ...
 
 local function RemoveExperienceBarAtMaxLevel()
     local maxPlayerLevel = GetMaxLevelForLatestExpansion()
@@ -6,7 +7,7 @@ local function RemoveExperienceBarAtMaxLevel()
     end
 end
 
-local function RemoveBottomActionBarStyling()
+local function RemoveMainMenuBarStyling()
     MainMenuBarArtFrame.LeftEndCap:Hide()
     MainMenuBarArtFrame.RightEndCap:Hide()
     MainMenuBarArtFrameBackground:Hide()
@@ -24,184 +25,6 @@ local function RemoveMenuMicroButtonAndBagsBar()
     MicroButtonAndBagsBar:EnableMouse(false)
     MicroButtonAndBagsBar:SetFrameStrata('BACKGROUND')
     MicroButtonAndBagsBar:SetFrameLevel(0)
-end
-
--- bottom right and bottom left are also anchored to the main action bar
-local MAIN_ACTION_BAR_FIRST_BUTTON = "ActionButton"
-local BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON = "MultiBarBottomLeftButton"
-local BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON = "MultiBarBottomRightButton"
-local RIGHT_ACTION_BAR_FIRST_BUTTON = "MultiBarRightButton"
-local LEFT_ACTION_BAR_FIRST_BUTTON = "MultiBarLeftButton"
-local STANCE_BAR_FIRST_BUTTON = "StanceButton"
-
-local function RemoveMacroNamesFromActionBar(name)
-    for i=1, 12 do
-        _G[name..i.."Name"]:SetAlpha(0)
-    end
-end
-
-local function RemoveMacroNamesFromAllActionBars()
-    RemoveMacroNamesFromActionBar(MAIN_ACTION_BAR_FIRST_BUTTON)
-    RemoveMacroNamesFromActionBar(BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON)
-    RemoveMacroNamesFromActionBar(BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON)
-    RemoveMacroNamesFromActionBar(RIGHT_ACTION_BAR_FIRST_BUTTON)
-    RemoveMacroNamesFromActionBar(LEFT_ACTION_BAR_FIRST_BUTTON)
-end
-
-local FIRST_ACTION_BAR_BUTTON_NAMES = {
-    MAIN_ACTION_BAR_FIRST_BUTTON..1,
-    MAIN_ACTION_BAR_FIRST_BUTTON..2,
-    MAIN_ACTION_BAR_FIRST_BUTTON..3,
-    MAIN_ACTION_BAR_FIRST_BUTTON..4,
-    MAIN_ACTION_BAR_FIRST_BUTTON..5,
-    MAIN_ACTION_BAR_FIRST_BUTTON..6,
-    MAIN_ACTION_BAR_FIRST_BUTTON..7,
-    MAIN_ACTION_BAR_FIRST_BUTTON..8,
-    MAIN_ACTION_BAR_FIRST_BUTTON..9,
-    MAIN_ACTION_BAR_FIRST_BUTTON..10,
-    MAIN_ACTION_BAR_FIRST_BUTTON..11,
-    MAIN_ACTION_BAR_FIRST_BUTTON..12,
-    BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON..1,
-    BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON..2,
-    BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON..3,
-    BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON..4
-}
-
-local SECOND_ACTION_BAR_BUTTON_NAMES = {
-    BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON..5,
-    BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON..6,
-    BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON..7,
-    BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON..8,
-    BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON..9,
-    BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON..10,
-    BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON..11,
-    BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON..12,
-    BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON..1,
-    BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON..2,
-    BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON..3,
-    BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON..4,
-    BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON..5,
-    BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON..6,
-    BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON..7,
-    BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON..8
-}
-
-local THIRD_ACTION_BAR_BUTTON_NAMES = {
-    BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON..9,
-    BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON..10,
-    BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON..11,
-    BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON..12,
-    RIGHT_ACTION_BAR_FIRST_BUTTON..1,
-    RIGHT_ACTION_BAR_FIRST_BUTTON..2,
-    RIGHT_ACTION_BAR_FIRST_BUTTON..3,
-    RIGHT_ACTION_BAR_FIRST_BUTTON..4,
-    RIGHT_ACTION_BAR_FIRST_BUTTON..5,
-    RIGHT_ACTION_BAR_FIRST_BUTTON..6,
-    RIGHT_ACTION_BAR_FIRST_BUTTON..7,
-    RIGHT_ACTION_BAR_FIRST_BUTTON..8,
-    RIGHT_ACTION_BAR_FIRST_BUTTON..9,
-    RIGHT_ACTION_BAR_FIRST_BUTTON..10,
-    RIGHT_ACTION_BAR_FIRST_BUTTON..11,
-    RIGHT_ACTION_BAR_FIRST_BUTTON..12
-}
-
-local FOURTH_ACTION_BAR_BUTTON_NAMES = {
-    LEFT_ACTION_BAR_FIRST_BUTTON..1,
-    LEFT_ACTION_BAR_FIRST_BUTTON..2,
-    LEFT_ACTION_BAR_FIRST_BUTTON..3,
-    LEFT_ACTION_BAR_FIRST_BUTTON..4,
-    LEFT_ACTION_BAR_FIRST_BUTTON..5,
-    LEFT_ACTION_BAR_FIRST_BUTTON..6,
-    LEFT_ACTION_BAR_FIRST_BUTTON..7,
-    LEFT_ACTION_BAR_FIRST_BUTTON..8,
-    LEFT_ACTION_BAR_FIRST_BUTTON..9,
-    LEFT_ACTION_BAR_FIRST_BUTTON..10,
-    LEFT_ACTION_BAR_FIRST_BUTTON..11,
-    LEFT_ACTION_BAR_FIRST_BUTTON..12
-}
-
-local STANCE_BAR_BUTTON_NAMES = {
-    STANCE_BAR_FIRST_BUTTON..1,
-    STANCE_BAR_FIRST_BUTTON..2,
-    STANCE_BAR_FIRST_BUTTON..3,
-    STANCE_BAR_FIRST_BUTTON..4,
-    STANCE_BAR_FIRST_BUTTON..5,
-    STANCE_BAR_FIRST_BUTTON..6
-}
-
-local ACTION_BAR_FRAME = CreateFrame("Frame", "VeilgrinUIActionBarFrame", UIParent)
-ACTION_BAR_FRAME:SetFrameStrata("MEDIUM")
-ACTION_BAR_FRAME:Show()
-
-local function RearrangeActionBarHorizontal(names, horizontalSpacing)
-    for i = 2, table.getn(names) do
-        local button = _G[names[i]]
-        button:ClearAllPoints()
-        button:SetPoint("LEFT", names[i - 1], "RIGHT", horizontalSpacing, 0)
-    end
-end
-
-local function RearrangeAllActionBarsHorizontal()
-    local horizontalSpacing = 6
-    RearrangeActionBarHorizontal(FIRST_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)
-    RearrangeActionBarHorizontal(SECOND_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)
-    RearrangeActionBarHorizontal(THIRD_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)
-    RearrangeActionBarHorizontal(FOURTH_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)
-end
-
-local function GetActionBarWidth(names, horizontalSpacing)
-    local width = 0
-    for i = 1, table.getn(names) do
-        local button = _G[names[i]]
-        width = width + button:GetWidth()
-    end
-    width = width + ((table.getn(names) - 1) * horizontalSpacing)
-    return width
-end
-
-local function GetActionBarHeight(names)
-    local button = _G[names[1]]
-    return button:GetHeight()
-end
-
-local function MoveActionBarCenterPoint(name, x, y)
-    local button = _G[name]
-    button:ClearAllPoints()
-    button:SetPoint("TOPLEFT", ACTION_BAR_FRAME, "TOPLEFT", x, y)
-end
-
-local function MoveAllActionBars(offsetY, verticalSpacing)
-    local horizontalSpacing = 6
-
-    local actionBarFrameWidth = GetActionBarWidth(FIRST_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)
-    ACTION_BAR_FRAME:SetWidth(actionBarFrameWidth)
-    local actionBarFrameHeight = (GetActionBarHeight(FIRST_ACTION_BAR_BUTTON_NAMES) * 4) + (verticalSpacing * 3)
-    ACTION_BAR_FRAME:SetHeight(actionBarFrameHeight)
-
-    MoveActionBarCenterPoint(
-        FIRST_ACTION_BAR_BUTTON_NAMES[1],
-        0,
-        0)
-    MoveActionBarCenterPoint(
-        SECOND_ACTION_BAR_BUTTON_NAMES[1],
-        0,
-        -GetActionBarHeight(FIRST_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing)
-    MoveActionBarCenterPoint(
-        THIRD_ACTION_BAR_BUTTON_NAMES[1],
-        0,
-        (-GetActionBarHeight(SECOND_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing) * 2)
-    MoveActionBarCenterPoint(
-        FOURTH_ACTION_BAR_BUTTON_NAMES[1],
-        (actionBarFrameWidth - GetActionBarWidth(FOURTH_ACTION_BAR_BUTTON_NAMES, horizontalSpacing)) / 2,
-        (-GetActionBarHeight(THIRD_ACTION_BAR_BUTTON_NAMES) + -verticalSpacing) * 3)
-    
-    ACTION_BAR_FRAME:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, offsetY)
-end
-
-local function MoveStanceActionBar(offsetX, offsetY)
-    local button = _G[STANCE_BAR_BUTTON_NAMES[1]]
-    button:ClearAllPoints()
-    button:SetPoint("TOPLEFT", UIParent, "TOPLEFT", offsetX, offsetY)
 end
 
 local defaultRaidFrameSortFunc = CompactRaidFrameContainer.flowSortFunc
@@ -239,29 +62,20 @@ local function EnableArenaNameplateNumbers()
     end)
 end
 
--- This prevents icons from being animated onto the main action bar when you learn them.
--- For example, when you switch talents but you have available "first action bar" slots,
--- the game will automatically add the talents to your action bar. This stops that from happening.
-local function DisableAutoAddSpellsToActionBar()
-    IconIntroTracker.RegisterEvent = function() end
-    IconIntroTracker:UnregisterEvent('SPELL_PUSHED_TO_ACTIONBAR')
-end
-
 local function OnPlayerLogin(self)
     ChatFrame1:AddMessage('(VeilgrinUI) Greetings, '..UnitName("Player")..'!')
 
-    RemoveBottomActionBarStyling()
+    RemoveMainMenuBarStyling()
     RemoveExperienceBarAtMaxLevel()
     RemoveMenuMicroButtonAndBagsBar()
-    RemoveMacroNamesFromAllActionBars()
+
+    addonTable.InitializeActionBars()
+    addonTable.InitializeStanceBar()
 
     CastingBarFrame:ClearAllPoints()
     CastingBarFrame:SetPoint("CENTER", UIParent, "CENTER", 0, -115)
     CastingBarFrame.ClearAllPoints = function() end
     CastingBarFrame.SetPoint = function() end
-    
-    RearrangeAllActionBarsHorizontal()
-    MoveAllActionBars(102, 6)
 
     PlayerFrame:ClearAllPoints()
     PlayerFrame:SetPoint("CENTER", UIParent, "CENTER", -115, -180)
@@ -283,15 +97,9 @@ local function OnPlayerLogin(self)
     ObjectiveTrackerFrame.ClearAllPoints = function() end
     ObjectiveTrackerFrame.SetPoint = function() end
 
-    MoveStanceActionBar(6, -5)
-
-    RearrangeActionBarHorizontal(STANCE_BAR_BUTTON_NAMES, 4)
-
     SetCVar("nameplateMinAlpha", 1)
 
     EnableArenaNameplateNumbers()
-
-    DisableAutoAddSpellsToActionBar()
 
     ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
 end

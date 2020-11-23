@@ -3,4 +3,6 @@
 ## Author: Andre Duvoisin
 ## Version: 0.0.1
 
+action-bars.lua
 main.lua
+stance-bar.lua
