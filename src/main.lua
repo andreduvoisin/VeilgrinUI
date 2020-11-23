@@ -1,5 +1,6 @@
 local addonName, addonTable = ...
 
+
 local function OnPlayerLogin(self)
     ChatFrame1:AddMessage('(VeilgrinUI) Greetings, '..UnitName("Player")..'!')
 
@@ -17,6 +18,7 @@ local function OnPlayerLogin(self)
     ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
 end
 
+
 local EVENT_PLAYER_LOGIN = "PLAYER_LOGIN"
 
 local function OnEvent(self, event, ...)
@@ -25,28 +27,22 @@ local function OnEvent(self, event, ...)
     end
 end
 
-local updateIntervalSeconds = 0.5;
-local timeSinceLastUpdateSeconds = 0.0;
 
-local function OnUpdate(self, elapsedSeconds)
-    timeSinceLastUpdateSeconds = timeSinceLastUpdateSeconds + elapsedSeconds;
+local TICK_INTERVAL_SECONDS = 0.5;
+local TIME_SINCE_LAST_TICK_SECONDS = 0.0;
 
-    if (timeSinceLastUpdateSeconds < updateIntervalSeconds) then return end
+local function OnUpdate(self, deltaSeconds)
+    TIME_SINCE_LAST_TICK_SECONDS = TIME_SINCE_LAST_TICK_SECONDS + deltaSeconds;
 
-    -- The extra button that appears for special mechanics.
-    -- e.g. use Heart of Azeroth, clear Sanity
-    ExtraActionButton1:ClearAllPoints()
-    ExtraActionButton1:SetPoint("CENTER", UIParent, "CENTER", 0, -550)
-    -- Move the strata of the menu bar. Defaults to LOW for ExtraActionButton1.
-    -- The menu bar is invisible and on top of the extra action button in MEDIUM, so it eats input events.
-    ExtraActionButton1:SetFrameStrata("MEDIUM")
+    if (TIME_SINCE_LAST_TICK_SECONDS < TICK_INTERVAL_SECONDS) then
+        return
+    end
+
+    addonTable.UpdateSpecialMechanics()
     
-    -- The extra information bar that appears for special mechanics.
-    PlayerPowerBarAlt:ClearAllPoints()
-    PlayerPowerBarAlt:SetPoint("CENTER", UIParent, "CENTER", 0, -300)
-    
-    timeSinceLastUpdateSeconds = 0;
+    TIME_SINCE_LAST_TICK_SECONDS = 0;
 end
+
 
 local EVENT_FRAME = CreateFrame("Frame")
 
