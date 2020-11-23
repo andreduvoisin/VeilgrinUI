@@ -12,5 +12,6 @@ src\main.lua
 src\micro-button-and-bags-bar.lua
 src\nameplates.lua
 src\quest-tracker.lua
+src\special-mechanics.lua
 src\stance-bar.lua
 src\unit-frames.lua
