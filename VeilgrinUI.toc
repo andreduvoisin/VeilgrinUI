@@ -7,7 +7,6 @@ main.lua
 src\action-bars.lua
 src\arena.lua
 src\cast-bar.lua
-src\experience-bar.lua
 src\main-menu-bar.lua
 src\micro-button-and-bags-bar.lua
 src\nameplates.lua
