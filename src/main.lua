@@ -19,23 +19,19 @@ end
 
 local EVENT_PLAYER_LOGIN = "PLAYER_LOGIN"
 
-local EVENT_FRAME = CreateFrame("Frame")
-
-EVENT_FRAME:RegisterEvent(EVENT_PLAYER_LOGIN)
-
-EVENT_FRAME:SetScript("OnEvent", function(self, event, ...)
+local function OnEvent(self, event, ...)
     if event == EVENT_PLAYER_LOGIN then
         OnPlayerLogin(self)
     end
-end)
+end
 
 local updateIntervalSeconds = 0.5;
-local timeSinceLastUpdate = 0.0;
+local timeSinceLastUpdateSeconds = 0.0;
 
-EVENT_FRAME:SetScript("OnUpdate", function(self, elapsed)
-    timeSinceLastUpdate = timeSinceLastUpdate + elapsed;
+local function OnUpdate(self, elapsedSeconds)
+    timeSinceLastUpdateSeconds = timeSinceLastUpdateSeconds + elapsedSeconds;
 
-    if (timeSinceLastUpdate < updateIntervalSeconds) then return end
+    if (timeSinceLastUpdateSeconds < updateIntervalSeconds) then return end
 
     -- The extra button that appears for special mechanics.
     -- e.g. use Heart of Azeroth, clear Sanity
@@ -49,5 +45,12 @@ EVENT_FRAME:SetScript("OnUpdate", function(self, elapsed)
     PlayerPowerBarAlt:ClearAllPoints()
     PlayerPowerBarAlt:SetPoint("CENTER", UIParent, "CENTER", 0, -300)
     
-    timeSinceLastUpdate = 0;
-end)
+    timeSinceLastUpdateSeconds = 0;
+end
+
+local EVENT_FRAME = CreateFrame("Frame")
+
+EVENT_FRAME:RegisterEvent(EVENT_PLAYER_LOGIN)
+
+EVENT_FRAME:SetScript("OnEvent", OnEvent)
+EVENT_FRAME:SetScript("OnUpdate", OnUpdate)
