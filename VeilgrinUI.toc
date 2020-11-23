@@ -3,6 +3,14 @@
 ## Author: Andre Duvoisin
 ## Version: 0.0.1
 
-action-bars.lua
-main.lua
-stance-bar.lua
+src\action-bars.lua
+src\arena.lua
+src\cast-bar.lua
+src\experience-bar.lua
+src\main-menu-bar.lua
+src\main.lua
+src\micro-button-and-bags-bar.lua
+src\nameplates.lua
+src\quest-tracker.lua
+src\stance-bar.lua
+src\unit-frames.lua
