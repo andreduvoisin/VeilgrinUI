@@ -1,12 +1,12 @@
 local addonName, addonTable = ...
 
-local PLAYER_FRAME_OFFSET_X = -115
+local PLAYER_FRAME_OFFSET_X = -120
 local PLAYER_FRAME_OFFSET_Y = -180
 
-local TARGET_FRAME_OFFSET_X = 115
+local TARGET_FRAME_OFFSET_X = 120
 local TARGET_FRAME_OFFSET_Y = -180
 
-local FOCUS_FRAME_OFFSET_X = 330
+local FOCUS_FRAME_OFFSET_X = 340
 local FOCUS_FRAME_OFFSET_Y = -180
 
 local function MoveUnitFrame(frame, offsetX, offsetY)
