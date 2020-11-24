@@ -14,9 +14,9 @@ local function MoveExtraAbilityContainer()
     ExtraAbilityContainer.SetPoint = function() end
 end
 
-local function InitializeExtraAbility()
+local function InitializeSpecialMechanics()
     MoveExtraAbilityContainer()
     MoveSpecialMechanicsPowerBar()
 end
 
-addonTable.InitializeExtraAbility = InitializeExtraAbility
+addonTable.InitializeSpecialMechanics = InitializeSpecialMechanics
