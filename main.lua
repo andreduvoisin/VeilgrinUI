@@ -7,20 +7,13 @@ ChatFrame1:AddMessage('(VeilgrinUI) Greetings, '..UnitName("Player")..'!')
 local function OnPlayerLogin(self, event)
     addonTable.InitializeActionBars()
     addonTable.InitializeArena()
-    addonTable.InitializeCastBar()
-    addonTable.InitializeMicroButtonAndBagsBar()
     addonTable.InitializeNameplates()
-    addonTable.InitializeQuestTracker()
-    addonTable.InitializeSpecialMechanics()
-    addonTable.InitializeStanceBar()
     addonTable.InitializeUnitFrames()
 
     ChatFrame1:AddMessage('(VeilgrinUI) Lok\'tar ogar!')
 end
 
 local function OnPlayerEnteringWorld(self, event, isInitialLogin, isReloadingUi)
-    addonTable.InitializeMainMenuBar()
-    
     ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
 end
 
