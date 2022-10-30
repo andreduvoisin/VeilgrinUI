@@ -1,4 +1,4 @@
-## Interface: 90002
+## Interface: 100000
 ## Title: VeilgrinUI
 ## Author: Andre Duvoisin
 ## Version: 0.0.1
@@ -6,11 +6,5 @@
 main.lua
 src\action-bars.lua
 src\arena.lua
-src\cast-bar.lua
-src\main-menu-bar.lua
-src\micro-button-and-bags-bar.lua
 src\nameplates.lua
-src\quest-tracker.lua
-src\special-mechanics.lua
-src\stance-bar.lua
 src\unit-frames.lua
