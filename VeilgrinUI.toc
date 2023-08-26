@@ -1,6 +1,7 @@
-## Interface: 80100
+## Interface: 11404
 ## Title: VeilgrinUI
 ## Author: Andre Duvoisin
 ## Version: 0.0.1
 
 main.lua
+src\action-bars.lua
