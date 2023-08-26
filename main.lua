@@ -61,12 +61,12 @@ local function OnPlayerLogin(self, event)
     MainMenuBar.SetPoint = function() end
 
     PlayerFrame:ClearAllPoints()
-    PlayerFrame:SetPoint("CENTER", "WorldFrame", -118, -180)
+    PlayerFrame:SetPoint("CENTER", "WorldFrame", -150, -190)
     PlayerFrame:SetScale(0.8, 0.8)
     PlayerFrame.SetPoint = function() end
 
     TargetFrame:ClearAllPoints()
-    TargetFrame:SetPoint("CENTER", "WorldFrame", 118, -180)
+    TargetFrame:SetPoint("CENTER", "WorldFrame", 150, -190)
     TargetFrame:SetScale(0.8, 0.8)
     TargetFrame.SetPoint = function() end
 

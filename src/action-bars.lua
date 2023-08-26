@@ -22,6 +22,7 @@ local BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON = "MultiBarBottomRightButton"
 local RIGHT_ACTION_BAR_FIRST_BUTTON = "MultiBarRightButton"
 local LEFT_ACTION_BAR_FIRST_BUTTON = "MultiBarLeftButton"
 local STANCE_BAR_FIRST_BUTTON = "StanceButton"
+local PET_ACTION_BAR_FIRST_BUTTON = "PetActionButton"
 
 local function RemoveMacroNamesFromActionBar(name)
     for i=1, 12 do
@@ -36,20 +37,6 @@ local function RemoveMacroNamesFromAllActionBars()
     RemoveMacroNamesFromActionBar(BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON)
     RemoveMacroNamesFromActionBar(RIGHT_ACTION_BAR_FIRST_BUTTON)
     RemoveMacroNamesFromActionBar(LEFT_ACTION_BAR_FIRST_BUTTON)
-end
-
-local function SetActionBarScale(name, scale)
-    for i=1, 12 do
-        _G[name..i]:SetScale(scale, scale)
-    end
-end
-
-local function SetScaleForAllActionBars(scale)
-    SetActionBarScale(MAIN_ACTION_BAR_FIRST_BUTTON, scale)
-    SetActionBarScale(BOTTOM_LEFT_ACTION_BAR_FIRST_BUTTON, scale)
-    SetActionBarScale(BOTTOM_RIGHT_ACTION_BAR_FIRST_BUTTON, scale)
-    SetActionBarScale(RIGHT_ACTION_BAR_FIRST_BUTTON, scale)
-    SetActionBarScale(LEFT_ACTION_BAR_FIRST_BUTTON, scale)
 end
 
 local FIRST_ACTION_BAR_BUTTON_NAMES = {
@@ -133,6 +120,33 @@ local STANCE_BAR_BUTTON_NAMES = {
     STANCE_BAR_FIRST_BUTTON..6
 }
 
+local PET_ACTION_BAR_BUTTON_NAMES = {
+    PET_ACTION_BAR_FIRST_BUTTON..1,
+    PET_ACTION_BAR_FIRST_BUTTON..2,
+    PET_ACTION_BAR_FIRST_BUTTON..3,
+    PET_ACTION_BAR_FIRST_BUTTON..4,
+    PET_ACTION_BAR_FIRST_BUTTON..5,
+    PET_ACTION_BAR_FIRST_BUTTON..6,
+    PET_ACTION_BAR_FIRST_BUTTON..7,
+    PET_ACTION_BAR_FIRST_BUTTON..8,
+    PET_ACTION_BAR_FIRST_BUTTON..9,
+    PET_ACTION_BAR_FIRST_BUTTON..10
+}
+
+local function SetActionBarScale(names, scale)
+    for i=1, table.getn(names) do
+        local button = _G[names[i]]
+        button:SetScale(scale, scale)
+    end
+end
+
+local function SetScaleForAllActionBars(scale)
+    SetActionBarScale(FIRST_ACTION_BAR_BUTTON_NAMES, scale)
+    SetActionBarScale(SECOND_ACTION_BAR_BUTTON_NAMES, scale)
+    SetActionBarScale(THIRD_ACTION_BAR_BUTTON_NAMES, scale)
+    SetActionBarScale(FOURTH_ACTION_BAR_BUTTON_NAMES, scale)
+end
+
 local function RearrangeActionBarHorizontal(names, horizontalSpacing)
     for i = 2, table.getn(names) do
         local button = _G[names[i]]
@@ -180,6 +194,12 @@ local function MoveStanceActionBar(offsetX, offsetY)
     button:SetPoint("CENTER", -693 + offsetX, 1061 + offsetY)
 end
 
+local function MovePetActionBar(offsetX, offsetY)
+    local button = _G[PET_ACTION_BAR_BUTTON_NAMES[1]]
+    button:ClearAllPoints()
+    button:SetPoint("CENTER", "WorldFrame", offsetX, offsetY)
+end
+
 local function InitializeActionBars()
     RemoveBottomActionBarStyling()
 
@@ -187,10 +207,14 @@ local function InitializeActionBars()
 
     SetScaleForAllActionBars(0.8)
     RearrangeAllActionBarsHorizontal()
-    MoveAllActionBars(0, -415, 3)
+    MoveAllActionBars(0, -385, 3)
     
     MoveStanceActionBar(6, -5)
     RearrangeActionBarHorizontal(STANCE_BAR_BUTTON_NAMES, 4)
+
+    MovePetActionBar(-317, -283)
+    SetActionBarScale(PET_ACTION_BAR_BUTTON_NAMES, 0.8)
+    RearrangeActionBarHorizontal(PET_ACTION_BAR_BUTTON_NAMES, 5)
 end
 
 addonTable.InitializeActionBars = InitializeActionBars
