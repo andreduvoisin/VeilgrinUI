@@ -55,16 +55,6 @@ local function OnPlayerLogin(self, event)
     MainMenuBar:SetPoint("CENTER", "WorldFrame", 0, -443)
     MainMenuBar.SetPoint = function() end
 
-    PlayerFrame:ClearAllPoints()
-    PlayerFrame:SetPoint("CENTER", "WorldFrame", -150, -190)
-    PlayerFrame:SetScale(0.8, 0.8)
-    PlayerFrame.SetPoint = function() end
-
-    TargetFrame:ClearAllPoints()
-    TargetFrame:SetPoint("CENTER", "WorldFrame", 150, -190)
-    TargetFrame:SetScale(0.8, 0.8)
-    TargetFrame.SetPoint = function() end
-
     SetCVar("nameplateMinAlpha", 1)
 
     -- BottomUnitFrames()
@@ -73,6 +63,20 @@ local function OnPlayerLogin(self, event)
 end
 
 local function OnPlayerEnteringWorld(self, event, isInitialLogin, isReloadingUi)
+    -- PlayerFrame needs to be in OnPlayerEnteringWorld() instead of OnPlayerLogin().
+    -- Otherwise, TargetFrameToT:Show() will taint. I don't know why.
+    PlayerFrame:ClearAllPoints()
+    PlayerFrame:SetPoint("CENTER", "WorldFrame", -150, -190)
+    PlayerFrame:SetScale(0.8, 0.8)
+    PlayerFrame.SetPoint = function() end
+
+    -- TargetFrame needs to be in OnPlayerEnteringWorld() instead of OnPlayerLogin().
+    -- Otherwise, TargetFrameToT:Show() will taint. I don't know why.
+    TargetFrame:ClearAllPoints()
+    TargetFrame:SetPoint("CENTER", "WorldFrame", 150, -190)
+    TargetFrame:SetScale(0.8, 0.8)
+    TargetFrame.SetPoint = function() end
+
     ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
 end
 
