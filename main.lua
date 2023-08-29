@@ -43,11 +43,6 @@ local function OnPlayerLogin(self, event)
     
     RemoveMenuMicroButtonAndBagsBar()
 
-    -- Without these, the MultiBarLeft and MultiBarRight buttons
-    -- scale according to the position of ActionButton1. I have no idea why.
-    MultiBarLeft.SetScale = function() end
-    MultiBarRight.SetScale = function() end
-
     QuestWatchFrame:ClearAllPoints()
     QuestWatchFrame:SetPoint("TOPRIGHT", "MinimapCluster", "BOTTOMRIGHT", 0, 0)
     QuestWatchFrame.SetPoint = function() end
@@ -57,7 +52,7 @@ local function OnPlayerLogin(self, event)
     CastingBarFrame.SetPoint = function() end
 
     MainMenuBar:ClearAllPoints()
-    MainMenuBar:SetPoint("CENTER", 0, -443)
+    MainMenuBar:SetPoint("CENTER", "WorldFrame", 0, -443)
     MainMenuBar.SetPoint = function() end
 
     PlayerFrame:ClearAllPoints()

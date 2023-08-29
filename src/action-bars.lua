@@ -201,6 +201,11 @@ local function MovePetActionBar(offsetX, offsetY)
 end
 
 local function InitializeActionBars()
+    -- Without these, the MultiBarLeft and MultiBarRight buttons
+    -- scale according to the position of ActionButton1. I have no idea why.
+    MultiBarLeft.SetScale = function() end
+    MultiBarRight.SetScale = function() end
+
     RemoveBottomActionBarStyling()
 
     RemoveMacroNamesFromAllActionBars()
