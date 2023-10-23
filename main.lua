@@ -39,6 +39,8 @@ end
 ChatFrame1:AddMessage('(VeilgrinUI) Greetings, '..UnitName("Player")..'!')
 
 local function OnPlayerLogin(self, event)
+    -- VerticalMultiBarsContainer:SetPoint() will taint if an action bar page is changed
+    -- or automatically swapped (e.g. from Stealth) while you are in combat. I don't know why.
     addonTable.InitializeActionBars()
     
     RemoveMenuMicroButtonAndBagsBar()
@@ -76,6 +78,10 @@ local function OnPlayerEnteringWorld(self, event, isInitialLogin, isReloadingUi)
     TargetFrame:SetPoint("CENTER", "WorldFrame", 150, -190)
     TargetFrame:SetScale(0.8, 0.8)
     TargetFrame.SetPoint = function() end
+    
+    MainMenuBarVehicleLeaveButton:ClearAllPoints()
+    MainMenuBarVehicleLeaveButton:SetPoint("CENTER", "WorldFrame", -200, -150)
+    MainMenuBarVehicleLeaveButton.SetPoint = function() end
 
     ChatFrame1:AddMessage('(VeilgrinUI) May your blades never dull!')
 end
